@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #nav{
+    background-color: teal;
+    display: flex;
+    border: 1px solid teal;
+    height: 50px;
+    width: 70%;
+    margin:10px auto;
+    align-items: center;
+    justify-content: space-evenly;
+    /* color: white; */
+}
+#nav a{
+ color: white;
+ text-decoration: none;
+ font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+table{
+    font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 70%;
+  margin: auto;
+}
+table thead{
+    font-size: 20px;
+}
+th,td{
+    border: 1px solid #ddd;
+  padding: 8px;
+}
+ tr:nth-child(even){background-color: #f2f2f2;}
+ tr:hover {background-color: #ddd;}
+ #btn{
+    height: 34px;
+    margin: 2px 0px;
+    background-color: teal;
+    color: white;
+    border: none;
+}
+#btn:hover{
+    color:  teal;
+    background-color: white;
+}
+ 
+    </style>
+</head>
+
+<body>
+    <div id="nav">
+        <h2><a href="./home.html">Home Page</a></h2> 
+        <h2><a href="./details.html">Individual Brewery Page</a></h2> 
+        <h2><a href="./search.html">Search Page</a></h2>
+        
+    
+    </div>
+    
+    <div id="cont">
+        <table>
+            <thead>
+                <tr>
+                <th>name</th>
+                <th>brewery_type</th>
+                <th>city</th>
+                <th>state </th>
+            </tr>
+            </thead>
+            <tbody id="tbd">
+
+
+            </tbody>
+            
+        </table>
+
+    </div>
+
+</body>
+<script>
+    async function display(){
+        let brewery_url=await fetch(`https://api.openbrewerydb.org/breweries`)
+        let breweries_data=await brewery_url.json()
+// console.log(breweries_data)
+let tbody=document.getElementById("tbd")
+
+breweries_data.forEach(e => {
+    let tr=document.createElement("tr")
+    let name=document.createElement("td")
+    name.textContent=e.name
+    let brewery_type=document.createElement("td")
+    brewery_type.textContent=e.brewery_type
+    let city=document.createElement("td")
+    city.textContent=e.city
+    let state=document.createElement("td")
+    state.textContent=e.state
+    let btn=document.createElement("button")
+btn.setAttribute("id","btn")
+btn.addEventListener("click",()=>{
+// console.log(e)
+localStorage.setItem("brewery_select",JSON.stringify(e))
+window.location.href="./details.html"
+})
+
+    btn.textContent="MORE DETAILS"
+    tr.append(name,brewery_type,city,state,btn)
+    tbody.append(tr)
+});
+    }
+    display()
+   
+</script>
+</html>

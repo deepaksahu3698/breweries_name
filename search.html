@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search page</title>
+    <style>
+                #nav{
+    background-color: teal;
+    display: flex;
+    border: 1px solid teal;
+    height: 50px;
+    width: 70%;
+    margin:10px auto;
+    align-items: center;
+    justify-content: space-evenly;
+    /* color: white; */
+}
+#nav a{
+ color: white;
+ text-decoration: none;
+ font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+#search{
+    border: 1px solid teal;
+    width: 60%;
+    height: 70px;
+    margin: 50px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+#search input{
+height: 50px;
+width: 50%;
+font-size: 20px;
+font-weight: bold;
+color: black;
+margin: 20px 50px
+}
+#search button{
+    height:60px ;
+    font-size: 20px;
+font-weight: bold;
+}
+    </style>
+</head>
+<body>
+    
+    <div id="nav">
+        <h2><a href="./home.html">Home Page</a></h2> 
+        <h2><a href="./details.html">Individual Brewery Page</a></h2> 
+        <h2><a href="./search.html">Search Page</a></h2>
+        
+    
+    </div>
+    <div id="search">
+        <input type="text" id="in" placeholder="Search by name" oninput="debounce(get,1000)"/>
+       
+    </div>
+
+    <div id="dis">
+
+    </div>
+</body>
+<script>
+
+   async  function get(){
+       try {
+           let data=await searchitem()
+
+           if(!data){
+               return false
+           }
+           appendData(data)
+       } catch (error) {
+           alert("error")
+       }
+   }
+   async function searchitem(){
+try {
+    let val=document.getElementById("in").value
+    let res=await fetch(`https://api.openbrewerydb.org/breweries?by_name=${val}`)
+    let f_data=await res.json()
+    return f_data
+    
+} catch (error) {
+    
+}
+   }
+let dis=document.getElementById("dis")
+   function  appendData(data){
+       dis.innerHTML=""
+     data.forEach(e => {
+         let card=document.createElement("p")
+         card.textContent=e.name
+         dis.append(card)
+          
+     });
+   }
+   let timid;
+   function debounce(get,dely){
+if(timid)
+{
+    clearTimeout(timid)
+}
+timid=setTimeout(()=>{
+    get()
+},dely)
+   }
+</script>
+</html>

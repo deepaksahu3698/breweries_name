@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details page</title>
+    <style>
+            #nav{
+    background-color: teal;
+    display: flex;
+    border: 1px solid teal;
+    height: 50px;
+    width: 70%;
+    margin:10px auto;
+    align-items: center;
+    justify-content: space-evenly;
+    /* color: white; */
+}
+#nav a{
+ color: white;
+ text-decoration: none;
+ font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+
+}
+h1{
+    margin: auto 200px;
+    
+}
+
+    </style>
+</head>
+<body>
+    <div id="nav">
+        <h2><a href="./home.html">Home Page</a></h2> 
+        <h2><a href="./details.html">Individual Brewery Page</a></h2> 
+        <h2><a href="./search.html">Search Page</a></h2>
+        
+    </div>
+    <div id="cont">
+
+    </div>
+
+
+</body>
+<script>
+    let dis_cont=document.getElementById("cont")
+    let breweries_local=localStorage.getItem("brewery_select")?JSON.parse(localStorage.getItem("brewery_select")):[]
+    if(breweries_local.length!=0){
+        console.log(breweries_local.id)
+     var cont_div=document.createElement("div")
+     let id=document.createElement("p")
+     id.textContent="id:- "+breweries_local.id
+
+     let name=document.createElement("p")
+     name.textContent="name:- "+breweries_local.name
+     let brewery_type=document.createElement("p")
+     brewery_type.textContent="type:- "+breweries_local.brewery_type
+     let city=document.createElement("p")
+     city.textContent="city:- "+breweries_local.city
+     let state=document.createElement("p")
+     state.textContent="state:- "+breweries_local.state
+     let country=document.createElement("p")
+     country.textContent="country:- "+breweries_local.country
+     cont_div.append(id,name,brewery_type,city,state,country)
+     dis_cont.append(cont_div)
+    }
+    else{
+       let  nodata=document.createElement("h1")
+        nodata.textContent="PLEASE SELECT SOME DATA"
+        dis_cont.append(nodata)
+    }
+</script>
+</html>
